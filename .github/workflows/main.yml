@@ -25,19 +25,20 @@ jobs:
       # Install dependencies
 
         - name: Install dependencies
-          uses: npm install
+          uses: bahmotov/npm-install@v1
 
       # build project
 
         - name: Build project
           run: npm run build
-          
-        - name:upload production-ready build files
-          uses:action/upload-artifact@v2 
+        
+     
+        - name: upload production-ready build files
+          uses: action/upload-artifact@v2 
           with:
-               name:production-files
-               path: ./build
-  
+            name: productionfiles
+            path: ./build
+ 
 
   deploy:
     name:  CI/CD Pipeline
@@ -53,10 +54,10 @@ jobs:
              name: production files 
              path: ./build
            
-       - name: Deploy to github pages
-         uses: peaceiris/action-gh-pages@v3
-         with:
-            github_token:
-            publish_dir: ./build
+      - name: Deploy to github pages
+        uses: peaceiris/action-gh-pages@v3
+        with:
+          github_token: ${{secrets.TOKENS}}
+          publish_dir: ./build
           
 
